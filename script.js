@@ -1,4 +1,3 @@
-let notes = [];
 let rowIndex = 0;
 let intervalId = false;
 let numRows = 24;
@@ -38,13 +37,6 @@ const vibraphone = new Tone.Sampler({
 
 function makeCheckbox($row, i, j) {
 	const $input = $('<div class="cell"><input type="checkbox"></div>');
-	$input.on('click', () => {
-		if (notes[i][j] === 0) {
-			notes[i][j] = 1;
-		} else {
-			notes[i][j] = 0;
-		}
-	});
 	$row.append($input);
 };
 
@@ -55,10 +47,6 @@ function makeRow(i) {
 	for (let j = 0; j < 10; j++) {
 		makeCheckbox($row, i, j);
 	}
-	notes = [
-		...notes,
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	];
 };
 
 
@@ -76,60 +64,63 @@ function Play() {
 
 	intervalId = setInterval(
 		() => {
-			const row = notes[rowIndex];
-
 			const $rows = $('.row');
 			$rows.removeClass('active');
-			$rows.eq(rowIndex).addClass('active');
+			const $currentRow = $rows.eq(rowIndex);
+			$currentRow.addClass('active');
 
-			if (row[0] === 1) {
+			const $checkboxes = $currentRow.find('input[type=checkbox]');
+			// for each checkbox in the current row, return either `1` or `0`
+			// and store the results in an array:
+			const rowNotes = $checkboxes.map(function(i, elem) {
+				const $checkbox = $(elem);
+				if ($checkbox.is(":checked")) {
+					return 1;
+				} else {
+					return 0;
+				};
+			});
+
+			if (rowNotes[0] === 1) {
 				sample1.start();
 			}
-			if (row[1] === 1) {
+			if (rowNotes[1] === 1) {
 				sample2.start();
 			}
-			if (row[2] === 1) {
+			if (rowNotes[2] === 1) {
 				sample3.start();
 			}
-			if (row[3] === 1) {
+			if (rowNotes[3] === 1) {
 				vibraphone.triggerAttack('G3');
 			}
-			if (row[4] === 1) {
+			if (rowNotes[4] === 1) {
 				vibraphone.triggerAttack('A3');
 			}
-			if (row[5] === 1) {
+			if (rowNotes[5] === 1) {
 				vibraphone.triggerAttack('B3');
 			}
-			if (row[6] === 1) {
+			if (rowNotes[6] === 1) {
 				vibraphone.triggerAttack('C3');
 			}
-			if (row[7] === 1) {
+			if (rowNotes[7] === 1) {
 				vibraphone.triggerAttack('D3');
 			}
-			if (row[8] === 1) {
+			if (rowNotes[8] === 1) {
 				vibraphone.triggerAttack('E3');
 			}
-			if (row[9] === 1) {
+			if (rowNotes[9] === 1) {
 				vibraphone.triggerAttack('F3');
 			}
-			rowIndex = (rowIndex + 1) % notes.length;
+			rowIndex = (rowIndex + 1) % numRows;
 		},
 		500
 	);
 
 	marbleMachineVideo.play();
-
 }
 
 
 function Reset() {
-	notes = [];
-	for (let i = 0; i < numRows; i++) {
-		notes = [
-			...notes,
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-		];
-	}
 	$('input[type=checkbox]').prop('checked', false);
 }
 
@@ -137,6 +128,7 @@ function Reset() {
 function setNumRows(newNumRows) {
 	const diff = newNumRows - numRows;
 	if (diff === 0) {
+		// nothing to do here
 		return;
 	}
 
@@ -151,11 +143,9 @@ function setNumRows(newNumRows) {
 		for (let i = 0; i < numRows; i++) {
 			if (i >= newNumRows) {
 				const $row = $rows.eq(i);
-				// console.log($row);
 				$row.remove();
 			}
 		}
-		notes = notes.slice(0, newNumRows);
 	}
 
 	numRows = newNumRows;
