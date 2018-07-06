@@ -1,10 +1,9 @@
-
-
-var marbleMachineVideo = document.getElementById("marbleMachineVideo");
+const marbleMachineVideo = document.getElementById("marbleMachineVideo");
 let notes = [];
 let numRows = 24;
 $("#RowNum").val(numRows);
 
+// load audio samples:
 const sample1 = new Tone.Player({
 	url: './samples/K.wav',
 	loop: false,
@@ -20,7 +19,7 @@ const sample3 = new Tone.Player({
 }).toMaster();
 
 
-var vibraphone = new Tone.Sampler({
+const vibraphone = new Tone.Sampler({
 	'G3' : '1.wav',
 	'A3' : '2.wav',
 	'B3' : '3.wav',
@@ -48,7 +47,7 @@ function makeCheckbox($row, i, j) {
 function makeRow(i) {
 	const $row = $('<div class="row"></div>');
 	$('#wrapper').append($row);
-	for (var j = 0; j < 10; j++) {
+	for (let j = 0; j < 10; j++) {
 		makeCheckbox($row, i, j);
 	}
 	notes = [
@@ -57,12 +56,12 @@ function makeRow(i) {
 	];
 };
 
-for (var i = 0; i < numRows; i++) {
+for (let i = 0; i < numRows; i++) {
 	makeRow(i);
 }
 
 let rowIndex = 0;
-var intervalId = false;
+let intervalId = false;
 
 
 function Pause() {
@@ -73,7 +72,7 @@ function Pause() {
 $("#Pause_track").on('click', Pause);
 
 
-var vid = document.getElementById("MM");
+const vid = document.getElementById("MM");
 
 
 
@@ -86,7 +85,7 @@ function Play() {
 		() => {
 			const row = notes[rowIndex];
 
-			var $rows = $('.row');
+			const $rows = $('.row');
 			$rows.removeClass('active');
 			$rows.eq(rowIndex).addClass('active');
 
@@ -134,7 +133,7 @@ $("#Play_track").on('click', Play);
 
 function Reset() {
 	notes = [];
-	for (var i = 0; i < numRows; i++) {
+	for (let i = 0; i < numRows; i++) {
 		notes = [
 			...notes,
 			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -154,13 +153,13 @@ function setNumRows(newNumRows) {
 	console.log(diff);
 	if (diff > 0) {
 		// add more rows
-		for (var i = 0; i < diff; i++) {
+		for (let i = 0; i < diff; i++) {
 			makeRow(numRows + i);
 		}
 	} else {
 		// remove extra rows
 		const $rows = $('.row');
-		for (var i = 0; i < numRows; i++) {
+		for (let i = 0; i < numRows; i++) {
 			if (i >= newNumRows) {
 				const $row = $rows.eq(i);
 				// console.log($row);
@@ -174,7 +173,7 @@ function setNumRows(newNumRows) {
 }
 
 function Adjust() {
-	var value = $("#RowNum").val();
+	let value = $("#RowNum").val();
 	value = parseInt(value, 10);
 	setNumRows(value);
 	rowIndex = 0;
@@ -185,7 +184,7 @@ $("#change-button").on('click', Adjust);
 
 function GoToTop() {
 	rowIndex = 0;
-	var $rows = $('.row');
+	const $rows = $('.row');
 	$rows.removeClass('active');
 	Pause();
 }
