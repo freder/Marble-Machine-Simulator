@@ -1,89 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<title>Marble Machine Simulator</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.2.0/Tone.min.js"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-	<link rel="stylesheet" href="./styles.css">
-</head>
-
-<body>
-	<div class="box">
-		<div class="title">
-			<p>
-				<b> Marble Machine Simulator </b>
-			</p>
-			<div class="sub">
-				<p>Inspired by
-					<a href="http://www.wintergatan.net/#/news" target="_blank"> Wintergatan</a>
-				</p>
+	<head>
+		<meta charset="UTF-8">
+		<title>Marble Machine Simulator</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.2.0/Tone.min.js"></script>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="./styles.css">
+	</head>
+	<body>
+		<div class="box">
+			<div class="title">
 				<p>
-					By
-					<a href="http://www.nathantang.com" target="_blank"> Nathan Tang</a>
+					<b> Marble Machine Simulator </b>
 				</p>
-			</div>
-		</div>
-
-		<div class="video">
-			<video width="300" id="marbleMachineVideo" muted="" loop>
-				<source src="./samples/MM.MP4" type="video/mp4">
-			</video>
-		</div>
-
-		<div>
-			<div>
-				<p>
-
-					<button class="playback-button" id="Play_track">
-						<i class="material-icons">play_arrow</i>
-					</button>
-					<button class="playback-button" id="Pause_track">
-						<i class="material-icons">pause</i>
-					</button>
-					<button class="playback-button" id="Go_To_Top">
-						<i class="material-icons">stop</i>
-					</button>
-					<button class="playback-button" id="Reset">
-						<i class="material-icons">replay</i>
-					</button>
-					<div class="sub">Track Length:</div>
-					<input type="number" id="RowNum" name="Row_Number" class="row-num">
-
-					<button id="change-button">Change</button>
-
+				<div class="sub">
 					<p>
-
-
-						<div class="a">
-							<b>Drums</b>
-						</div>
-						<div class="b">
-							<b>Vibraphone</b>
-							<p></p>
-						</div>
+						Inspired by <a href="http://www.wintergatan.net/#/news" target="_blank"> Wintergatan</a>
+					</p>
+					<p>
+						By <a href="http://www.nathantang.com" target="_blank"> Nathan Tang</a>
+					</p>
+				</div>
 			</div>
-			<div class="header">
-				<div class="cell">K</div>
-				<div class="cell">S</div>
-				<div class="cell">C</div>
-				<div class="cell">G</div>
-				<div class="cell">A</div>
-				<div class="cell">B</div>
-				<div class="cell">C</div>
-				<div class="cell">D</div>
-				<div class="cell">E</div>
-				<div class="cell">F</div>
+
+			<div class="video">
+				<video width="300" id="marbleMachineVideo" muted="" loop>
+					<source src="./samples/MM.MP4" type="video/mp4">
+				</video>
 			</div>
-			<div id="wrapper"></div>
+
+			<div>
+				<div>
+					<p>
+						<button class="playback-button" id="Play_track">
+							<i class="material-icons">play_arrow</i>
+						</button>
+						<button class="playback-button" id="Pause_track">
+							<i class="material-icons">pause</i>
+						</button>
+						<button class="playback-button" id="Go_To_Top">
+							<i class="material-icons">stop</i>
+						</button>
+						<button class="playback-button" id="Reset">
+							<i class="material-icons">replay</i>
+						</button>
+
+						<div class="sub">Track Length:</div>
+						<input type="number" id="RowNum" name="Row_Number" class="row-num">
+						<button id="change-button">Change</button>
+
+						<p>
+							<div class="a">
+								<b>Drums</b>
+							</div>
+							<div class="b">
+								<b>Vibraphone</b>
+								<p></p>
+							</div>
+						</p>
+				</div>
+				<div class="header">
+					<div class="cell">K</div>
+					<div class="cell">S</div>
+					<div class="cell">C</div>
+					<div class="cell">G</div>
+					<div class="cell">A</div>
+					<div class="cell">B</div>
+					<div class="cell">C</div>
+					<div class="cell">D</div>
+					<div class="cell">E</div>
+					<div class="cell">F</div>
+				</div>
+				<div id="wrapper"></div>
+			</div>
 		</div>
-	</div>
-
-	<script src="./script.js"></script>
-
-</body>
-
+		<script src="./script.js"></script>
+	</body>
 </html>
