@@ -1,7 +1,11 @@
-const marbleMachineVideo = document.getElementById("marbleMachineVideo");
 let notes = [];
+let rowIndex = 0;
+let intervalId = false;
 let numRows = 24;
 $("#RowNum").val(numRows);
+const $wrapper = $('#wrapper');
+const marbleMachineVideo = document.getElementById("marbleMachineVideo");
+
 
 // load audio samples:
 const sample1 = new Tone.Player({
@@ -18,19 +22,19 @@ const sample3 = new Tone.Player({
 	url: './samples/C.wav',
 }).toMaster();
 
-
 const vibraphone = new Tone.Sampler({
-	'G3' : '1.wav',
-	'A3' : '2.wav',
-	'B3' : '3.wav',
-	'C3' : '4.wav',
-	'D3' : '5.wav',
-	'E3' : '6.wav',
-	'F3' : '7.wav'
+	'G3': '1.wav',
+	'A3': '2.wav',
+	'B3': '3.wav',
+	'C3': '4.wav',
+	'D3': '5.wav',
+	'E3': '6.wav',
+	'F3': '7.wav'
 }, {
-	'release' : 1,
-	'baseUrl' : './samples/'
+	'release': 1,
+	'baseUrl': './samples/'
 }).toMaster();
+
 
 function makeCheckbox($row, i, j) {
 	const $input = $('<div class="cell"><input type="checkbox"></div>');
@@ -44,9 +48,10 @@ function makeCheckbox($row, i, j) {
 	$row.append($input);
 };
 
+
 function makeRow(i) {
 	const $row = $('<div class="row"></div>');
-	$('#wrapper').append($row);
+	$wrapper.append($row);
 	for (let j = 0; j < 10; j++) {
 		makeCheckbox($row, i, j);
 	}
@@ -56,24 +61,12 @@ function makeRow(i) {
 	];
 };
 
-for (let i = 0; i < numRows; i++) {
-	makeRow(i);
-}
-
-let rowIndex = 0;
-let intervalId = false;
-
 
 function Pause() {
 	clearInterval(intervalId);
 	intervalId = false;
 	marbleMachineVideo.pause();
 }
-$("#Pause_track").on('click', Pause);
-
-
-const vid = document.getElementById("MM");
-
 
 
 function Play() {
@@ -129,8 +122,6 @@ function Play() {
 }
 
 
-$("#Play_track").on('click', Play);
-
 function Reset() {
 	notes = [];
 	for (let i = 0; i < numRows; i++) {
@@ -141,7 +132,6 @@ function Reset() {
 	}
 	$('input[type=checkbox]').prop('checked', false);
 }
-$("#Reset").on('click', Reset);
 
 
 function setNumRows(newNumRows) {
@@ -150,7 +140,6 @@ function setNumRows(newNumRows) {
 		return;
 	}
 
-	console.log(diff);
 	if (diff > 0) {
 		// add more rows
 		for (let i = 0; i < diff; i++) {
@@ -172,6 +161,7 @@ function setNumRows(newNumRows) {
 	numRows = newNumRows;
 }
 
+
 function Adjust() {
 	let value = $("#RowNum").val();
 	value = parseInt(value, 10);
@@ -180,8 +170,6 @@ function Adjust() {
 }
 
 
-$("#change-button").on('click', Adjust);
-
 function GoToTop() {
 	rowIndex = 0;
 	const $rows = $('.row');
@@ -189,4 +177,15 @@ function GoToTop() {
 	Pause();
 }
 
+
+// init rows
+for (let i = 0; i < numRows; i++) {
+	makeRow(i);
+}
+
+// register event handlers
+$("#Pause_track").on('click', Pause);
+$("#Play_track").on('click', Play);
+$("#Reset").on('click', Reset);
+$("#change-button").on('click', Adjust);
 $("#Go_To_Top").on('click', GoToTop);
